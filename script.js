@@ -1,3 +1,21 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function infos(){
     console.log("Dans infos()");
     $.getJSON("http://localhost:8888/joueurs",data => {console.log(data);});
