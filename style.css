@@ -3,3 +3,18 @@ body{
   background-color: whitesmoke;
   text-align: center;
 }
+footer{
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  background-color: black;
+  color: white;
+  text-align:center;
+}
+header{
+  margin-top: 0;
+  width: 100vw;
+  background-color: black;
+  color: white;
+  text-align:center;
+}

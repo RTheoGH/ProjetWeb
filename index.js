@@ -28,20 +28,21 @@ app.get('/joueurs', (request,response) => {
 
 app.get('/entree/:nomJoueur', (request,response) => {
     let nomJoueur = request.params.nomJoueur;
-    if (joueurs.length<2 )
-        if (!joueurs.includes(nomJoueur)){ 
+    if (joueurs.length<2){ 
+        if (!joueurs.includes(nomJoueur)){
             joueurs.push(nomJoueur);
-            response.json({joueurs:joueurs,erreur:""});
-        }
-        else response.json({joueurs:joueurs,erreur:"Connu !"});
-    response.json(joueurs);
+            response.json({joueurs:joueurs});
+        }else response.json({joueurs:joueurs,erreur:"Le joueur est déja là !"});
+    }else response.json({joueurs:joueurs,erreur:"Trop de Joueurs !"}); 
 });
 
 app.get('/sortie/:nomJoueur', (request,response) => {
     let nomJoueur = request.params.nomJoueur;
-    let index = array.indexOf(nomJoueur)
-    if (index != -1) joueurs.splice(index, 1);
-    response.json(joueurs);
+    let index = joueurs.indexOf(nomJoueur);
+    if (index != -1){
+        joueurs.splice(index, 1);
+        response.json({joueurs:joueurs});
+    }else response.json({joueurs:joueurs,erreur:"Ce joueur n'existe pas"});
 });
 
 app.get('/pion/:position/:numJoueur', (request,response) => {
