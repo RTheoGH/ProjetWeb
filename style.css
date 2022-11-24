@@ -1,8 +1,21 @@
 body{
-  margin:0;
-  background-color: whitesmoke;
+  margin:auto;
+  background-image: url(heximage.jpg);
+  background-size: 1535px;
   text-align: center;
 }
+
+.principal{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  opacity: 0.8;
+  border: 5px solid black;
+  padding: auto;
+  background-color: whitesmoke;
+}
+
 footer{
   position: absolute;
   bottom: 0;

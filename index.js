@@ -28,7 +28,7 @@ app.get('/joueurs', (request,response) => {
 
 app.get('/entree/:nomJoueur', (request,response) => {
     let nomJoueur = request.params.nomJoueur;
-    if (joueurs.length<2){ 
+    if (joueurs.length<4){ 
         if (!joueurs.includes(nomJoueur)){
             joueurs.push(nomJoueur);
             response.json({joueurs:joueurs});

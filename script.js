@@ -1,5 +1,5 @@
 function infos(){
-    console.log("Dans infos()");
+    console.log("Joueurs dans la partie :");
     $.getJSON("http://localhost:8888/joueurs",data => {console.log(data);});
 };
 
