@@ -1,8 +1,12 @@
 body{
   margin:auto;
-  background-image: url(heximage.jpg);
-  background-size: 1535px;
-  text-align: center;
+  background-image: url(heximage.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover
+  /*background-size: 1535px;
+  text-align: center;*/
 }
 
 .principal{
