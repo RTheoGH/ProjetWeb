@@ -18,19 +18,13 @@
         <div class="principal">
         <h1>JEU DE HEX</h1>
         <h2>Le jeu le plus simple au monde !</h2>
-        <!-- <label for="nJoueur">Choisir le nombre de joueurs : </label>
-        <select nom="nombreJoueur" id="nJoueur">
-            <option value=2>2</option>
-            <option value=3>3</option>
-            <option value=4>4</option>
-        </select><br/> -->
-        <label for="nom">Entrez votre nom</label><br/>
+        <label for="nom">Entrez votre nom</label><br/><br/>
         <input id="nom" type="text"/>
         <button type = "button" onClick = "entrerDansLaPartie()">Rejoindre</button>
-        <button type="button" onClick="quitterLaPartie()">Quitter</button><br/><br/>
+        <button type="button" class="red" onClick="quitterLaPartie()">Quitter</button><br/><br/>
         Joueurs dans la partie :<ol id = "listeJoueurs"></ol> <br/>
-        <button type="button" onClick="infos()">Informations</button><br/><br/>
-        <button type="button" onClick="lancer()">Lancer la partie !</button>
+        <button type="button" class="green" onClick="infos()">Informations</button><br/><br/>
+        <button type="button" class="green" onClick="lancer()">Lancer la partie !</button>
         </div>
         <footer>
             <p>&copy; 2022 THEO REYNIER | ANTHONY HOMMAIS</p>

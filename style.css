@@ -5,23 +5,23 @@ body{
   text-align: center;
 }
 
-.game{
-  text-align: center;
-  position:absolute;
-  top:50%;
-  left:55%;
-  transform:translate(-50%,-50%);
-}
-
 .principal{
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  opacity: 0.8;
+  opacity: 0.9;
   border: 5px solid black;
   padding: auto;
   background-color: whitesmoke;
+}
+
+header{
+  margin-top: 0;
+  width: 100vw;
+  background-color: black;
+  color: white;
+  text-align:center;
 }
 
 footer{
@@ -32,10 +32,33 @@ footer{
   color: white;
   text-align:center;
 }
-header{
-  margin-top: 0;
-  width: 100vw;
-  background-color: black;
-  color: white;
+
+input{
   text-align:center;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 }
+
+button{
+  text-align:center;
+  background-color:blue;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.red{
+  background-color:red;
+}
+
+.green{
+  background-color: green;
+}
+
+
