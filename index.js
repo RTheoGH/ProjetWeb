@@ -9,9 +9,9 @@ console.log('Ecoute sur le port 8888') ;
 });
 
 var joueurs = [];
-var hex = []; 
-for (i=0;i<121;i++) hex.push(-1);
-var jeton = -1, dernierPion = -1;
+// var hex = []; 
+// for (i=0;i<121;i++) hex.push(-1);
+// var jeton = -1, dernierPion = -1;
 
 app.get('/', (request,response) => {
     response.sendFile('index.html',{root: __dirname});

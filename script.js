@@ -40,3 +40,7 @@ function quitterLaPartie(){
         });
     }
 };
+
+function lancer(){
+    window.open("http://localhost:8888/fichier/hexagone.html","Partie en cours...","");
+}
