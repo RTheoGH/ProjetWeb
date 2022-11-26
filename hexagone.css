@@ -1,9 +1,3 @@
-body{
-    margin:auto;
-    background-color: whitesmoke;
-    text-align: center;
-}
-
 .game{
     text-align: center;
     position:absolute;
@@ -12,33 +6,10 @@ body{
     transform:translate(-50%,-50%);
 }
 
-header{
-    margin-top: 0;
-    width: 100vw;
-    background-color: black;
-    color: white;
-    text-align:center;
-}
-
-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100vw;
-    background-color: black;
-    color: white;
-    text-align:center;
-}
-
-button{
-    text-align:center;
+.quitterButton{
     position:absolute;
     top:75%;
     left:75%;
-    background-color: red;
     color: white;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
 }

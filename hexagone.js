@@ -1,6 +1,9 @@
-window.addEventListener('load', (event) => { genereDamier(20, 11, 11); });
-var jeton=3;
-var couleurJoueur=['red','blue,','green','orange'];
+//window.addEventListener('load', (event) => { genereDamier(20, 11, 11); });
+
+
+var jeton=0;
+function setJeton(newJeton) {jeton=newJeton};
+var couleursJoueurs=['red','blue','green','orange'];
 
 function creeHexagone(rayon) {
     var points = new Array();
@@ -8,7 +11,7 @@ function creeHexagone(rayon) {
         var angle = i * Math.PI / 3;
         var x = Math.sin(angle) * rayon;
         var y = -Math.cos(angle) * rayon;
-            console.log("x="+Math.round(x*100)/100+" y="+Math.round(y*100)/100);
+        //console.log("x="+Math.round(x*100)/100+" y="+Math.round(y*100)/100);
         points.push([Math.round(x*100)/100, Math.round(y*100)/100]);
     }
     return points;
@@ -40,12 +43,12 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .attr("fill", "white")
                 .attr("id", "h"+(ligne*11+colonne)) // car un id doit commencer par une lettre pour pouvoir être utilisé
                 .on("click", function(d) {
-                    console.log(d3.select(this).attr('id'));
-                    if(jeton==joueur.length-1){
-                        jeton=0;
-                    };
-                    d3.select(this).attr('fill', couleurJoueur[jeton]);
-                    jeton++;
+                    let position=d3.select(this).attr('id').substring(1);
+                    console.log(position);
+                    $.getJSON('/pion/'+position+'/'+jeton, (data)=> {
+                        console.log(data);
+                    });
+                    d3.select(this).attr('fill', couleursJoueurs[jeton]);
             });
             }
     }

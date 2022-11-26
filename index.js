@@ -9,9 +9,10 @@ console.log('Ecoute sur le port 8888') ;
 });
 
 var joueurs = [];
-// var hex = []; 
-// for (i=0;i<121;i++) hex.push(-1);
-// var jeton = -1, dernierPion = -1;
+var hex = []; 
+for (i=0;i<121;i++) hex.push(-1);
+var jeton = -1, dernierPion = -1;
+var partieLancee=false;
 
 app.get('/', (request,response) => {
     response.sendFile('index.html',{root: __dirname});
@@ -19,6 +20,10 @@ app.get('/', (request,response) => {
 
 app.get('/fichier/:nomFichier', (request,response) => {  
     response.sendFile(request.params.nomFichier,{root: __dirname});
+});
+
+app.get('/jeu', (request,response) => {  
+    response.sendFile('hexagone.html',{root: __dirname});
 });
 
 app.get('/joueurs', (request,response) => {
@@ -46,6 +51,7 @@ app.get('/sortie/:nomJoueur', (request,response) => {
 });
 
 app.get('/pion/:position/:numJoueur', (request,response) => {
+    console.log(request.params.numJoueur);
     if (request.params.numJoueur == jeton){
         let position = parseInt(request.params.position);
         if (position >= 0 && position < 121)
@@ -57,14 +63,23 @@ app.get('/pion/:position/:numJoueur', (request,response) => {
     }
 });
 
+app.get('/getPions', (request,response) => {
+    response.json(hex);
+})
+
 app.get('/dernierPion', (request,response) => {
     console.log(dernierPion);
     response.json(dernierPion);
 });
 
-app.get('/etatPartie', (request,response) => {
-    console.log(etatPartie);
-    response.json(etatPartie);
+app.get('/lancerPartie', (request,response) => {
+    partieLancee=true;
+    response.end();
+})
+
+app.get('/partieLancee', (request,response) => {
+    console.log(partieLancee);
+    response.json(partieLancee);
 })
 
 app.get('/etatJeton', (request,reponse) => {
