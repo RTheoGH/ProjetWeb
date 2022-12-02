@@ -1,20 +1,20 @@
 var nomJoueur="";
 var joueursPresents=[];
 
-function refreshJoueurs(){
+function refreshJoueurs(){           // fonction pour raffraichir les joueurs présents
     $.getJSON("/joueurs", (data) => {
         joueursPresents=data;
     });
 }
 
-function infos(){
+function infos(){     // renvoie les informations sur les joueurs dans la console
     console.log("Joueurs dans la partie :");
     $.getJSON("http://localhost:8888/joueurs",data => {console.log(data);});
 };
 
 function entrerDansLaPartie(){
     nomJoueur = document.getElementById("nom").value;
-    if (nomJoueur !="" && nomJoueur != " "){
+    if (nomJoueur !="" && nomJoueur != " "){          //evite d'avoir un nom de joueur vide
         $.getJSON("http://localhost:8888/entree/"+nomJoueur,(data) => {
             console.log(data);
             if(data.erreur){
@@ -23,14 +23,14 @@ function entrerDansLaPartie(){
                 $("#listeJoueurs").empty();
                 if (nomJoueur == data.joueurs[0]) numJoueur=0;
                 else numJoueur=1;
-                for (let joueur of data.joueurs){
+                for (let joueur of data.joueurs){           // ajoute le joueur
                     $("#listeJoueurs").append("<li>"+joueur+"</li>");
                 }
                 refreshJoueurs();
                 setJeton(joueursPresents.indexOf(nomJoueur));
-                $("#nom").prop("disabled",true);
-                $("#enter").prop("disabled",true);
-                $("#quitter").prop("disabled",false);
+                $("#nom").prop("disabled",true);  // une fois le joueur dans la partie on veut éviter qu'un
+                $("#enter").prop("disabled",true);     // autre joueur entre sur la même page
+                $("#quitter").prop("disabled",false);   // le bouton quitter devient disponible
             }
         });
     }
@@ -51,7 +51,7 @@ function quitterLaPartie(){
                 for (let joueur of data.joueurs){
                     $("#listeJoueurs").append("<li>"+joueur+"</li>");
                 }
-                $("#nom").prop("disabled",false);
+                $("#nom").prop("disabled",false);         // inversement à la fonction entrerDansLaPartie
                 $("#enter").prop("disabled",false);
                 $("#quitter").prop("disabled",true);
             }
@@ -60,12 +60,12 @@ function quitterLaPartie(){
     refreshJoueurs();
 };
 
-function clear(){
+function clear(){                    // fonction pour "clear" la page web afin d'afficher le jeu
     $(".principal").remove();
     $("body").removeClass();
 }
 
-function testSiLancee(){
+function testSiLancee(){               // fonction pour vérifier si la partie est lancée
     console.log('test');
     $.getJSON("/partieLancee", (data) => {
         if(data==true){
@@ -77,9 +77,9 @@ function testSiLancee(){
     refreshJoueurs();
 }
 
-let testSiLanceeInterval=setInterval(testSiLancee,1000);
+let testSiLanceeInterval=setInterval(testSiLancee,1000); // teste toute les 1 secondes si la partie est bien lancée
 
-function showJeu(){
+function showJeu(){            // fonction principale qui affiche le jeu une fois qu'un joueur lance la partie
     clear();
     $("header").text("Partie en cours...");
     var div1="<div id='tablier' class='game'></div>";
@@ -88,7 +88,7 @@ function showJeu(){
     genereDamier(20, 11, 11);
 }
 
-function lancer(){
+function lancer(){    // Pour lancer la partie
     refreshJoueurs();
     $.getJSON("/lancerPartie",(data) => {});
 }
