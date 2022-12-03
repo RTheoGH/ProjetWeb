@@ -10,24 +10,53 @@
     <link rel="stylesheet" href="/fichier/style.css">
     <link rel="stylesheet" href="/fichier/hexagone.css">
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="/fichier/script.js"></script>
+    <script src="/fichier/script.js" defer></script>
     <script src="/fichier/hexagone.js"></script>
     </head>
 
     <body class="menu">
         <header>
-            Bienvenue !
+            Paramétrage en cours...
         </header>
+
         <div class="principal">
-        <h1>JEU DE HEX</h1>
-        <h2>Le jeu le plus simple au monde !</h2>
-        <label for="nom">Entrez votre nom</label><br/><br/>
-        <input id="nom" type="text"/>
-        <button id="enter" type="button" onClick = "entrerDansLaPartie()">Rejoindre</button>
-        <button id="quitter" type="button" disabled class="red" onClick="quitterLaPartie()">Quitter</button><br/><br/>
-        Joueurs dans la partie :<ol id = "listeJoueurs"></ol> <br/>
-        <button type="button" class="green" onClick="infos()">Informations</button><br/><br/>
-        <button type="button" class="green" onClick="lancer()">Lancer la partie !</button>
+            <div id="setup">
+                <h1>Paramètres</h1>
+                <div class="ligne">
+                    <div class="left">
+                        <p>Nombre de joueurs</p>
+                        <input name="nbJ" id="deux" type="radio" value="2" checked />
+                        <label for="deux">2 (défaut)</label><br/>
+                        <input name="nbJ" id="trois" type="radio" value="3"/>
+                        <label for="trois">3</label><br/>
+                        <input name="nbJ" id="quatre" type="radio" value="4"/>
+                        <label for="quatre">4</label><br/>
+                    </div>
+                    <div class="left">
+                        <p>Taille du plateau</p>
+                        <input name="taille" id="neuf" type="radio" value="9"/>
+                        <label for="neuf">9</label><br/>
+                        <input name="taille" id="onze" type="radio" value="11" checked />
+                        <label for="onze">11 (défaut)</label><br/>
+                        <input name="taille" id="quatorze" type="radio" value="14"/>
+                        <label for="quatorze">14</label><br/>
+                        <input name="taille" id="dixneuf" type="radio" value="19"/>
+                        <label for="dixneuf">19</label><br/>
+                    </div><br/>
+                </div>
+                <button class="green" onClick="recupParams()">Confirmer</button>
+            </div>
+            <div id="menu">
+                <h1>JEU DE HEX</h1>
+                <h2>Le jeu le plus simple au monde !</h2>
+                <label for="nom">Entrez votre nom</label><br/><br/>
+                <input id="nom" type="text"/>
+                <button id="enter" onClick = "entrerDansLaPartie()">Rejoindre</button>
+                <button id="quitter" disabled class="red" onClick="quitterLaPartie()">Quitter</button><br/><br/>
+                Joueurs dans la partie :<ol id = "listeJoueurs"></ol> <br/>
+                <button class="green" onClick="infos()">Informations</button><br/><br/>
+                <button class="green" onClick="lancer()">Lancer la partie !</button>
+            </div>
         </div>
         <footer>
             <p>&copy; 2022 THEO REYNIER | ANTHONY HOMMAIS</p>

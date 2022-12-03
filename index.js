@@ -9,8 +9,14 @@ console.log('Ecoute sur le port 8888') ;
 });
 
 var joueurs = [];
-var hex = []; 
-for (i=0;i<121;i++) hex.push(-1);
+var joueursMax = 0;
+function initJMax(j){
+    joueursMax = parseInt(j) || 0;
+}
+var hex = [];
+function initHex(n){
+    for (i=0;i<n**2;i++) hex.push(-1);
+}
 var jeton = -1, dernierPion = -1;
 var partieLancee=false;
 
@@ -21,6 +27,27 @@ app.get('/', (request,response) => {                          // chemin principa
 app.get('/fichier/:nomFichier', (request,response) => {       // chemin permettant d'utiliser les fichiers
     response.sendFile("public/"+request.params.nomFichier,{root: __dirname});
 });
+
+app.get('/setup/:nbJChoix/:tailleChoix', (request,response) => { // chemin initialisation jeu
+    if (partieLancee) response.end();
+    let nbJ = request.params.nbJChoix;
+    let taille = request.params.tailleChoix;
+    console.log(nbJ,taille);
+    initJMax(nbJ);
+    initHex(taille);
+    console.log(hex);
+    console.log(joueursMax);
+    response.end();
+});
+
+app.get('/estSetup', (request,response) => {       // chemin verifiant si la partie est configurée
+    if (joueursMax>=2 && joueursMax<=4 && hex!=[]) response.json(true);
+    response.json(false);
+});
+
+app.get('/recupTaille', (request,response) => {
+    response.json(Math.sqrt(hex.length));
+})
 
 app.get('/jeu', (request,response) => {                       // chemin du jeu
     response.sendFile('public/hexagone.html',{root: __dirname});
@@ -33,7 +60,8 @@ app.get('/joueurs', (request,response) => {                   // chemin d'affich
 
 app.get('/entree/:nomJoueur', (request,response) => {         // chemin d'entrer des joueurs
     let nomJoueur = request.params.nomJoueur;
-    if (joueurs.length<4){ 
+    console.log(nomJoueur+" est rentré");
+    if (joueurs.length<joueursMax){ 
         if (!joueurs.includes(nomJoueur)){
             joueurs.push(nomJoueur);
             response.json({joueurs:joueurs});

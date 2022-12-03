@@ -1,5 +1,6 @@
 var nomJoueur="";
 var joueursPresents=[];
+$("#menu").hide();
 
 function refreshJoueurs(){           // fonction pour raffraichir les joueurs présents
     $.getJSON("/joueurs", (data) => {
@@ -14,6 +15,7 @@ function infos(){     // renvoie les informations sur les joueurs dans la consol
 
 function entrerDansLaPartie(){
     nomJoueur = document.getElementById("nom").value;
+    console.log(nomJoueur+" : le frérot veut rentrer")
     if (nomJoueur !="" && nomJoueur != " "){          //evite d'avoir un nom de joueur vide
         $.getJSON("http://localhost:8888/entree/"+nomJoueur,(data) => {
             console.log(data);
@@ -34,6 +36,7 @@ function entrerDansLaPartie(){
             }
         });
     }
+    
     refreshJoueurs();
 };
 
@@ -66,7 +69,7 @@ function clear(){                    // fonction pour "clear" la page web afin d
 }
 
 function testSiLancee(){               // fonction pour vérifier si la partie est lancée
-    console.log('test');
+    // console.log('test');
     $.getJSON("/partieLancee", (data) => {
         if(data==true){
             showJeu();
@@ -79,16 +82,50 @@ function testSiLancee(){               // fonction pour vérifier si la partie e
 
 let testSiLanceeInterval=setInterval(testSiLancee,1000); // teste toute les 1 secondes si la partie est bien lancée
 
+function recupParams(){
+    const nbJoueurs = document.querySelectorAll('input[name="nbJ"]');
+    const nbTaille = document.querySelectorAll('input[name="taille"]');
+    let nbJChoix;
+    for (const nbJ of nbJoueurs) {
+        if (nbJ.checked) {
+            nbJChoix = nbJ.value;
+            break;
+        }
+    }
+    let tailleChoix;
+    for (const taille of nbTaille) {
+        if (taille.checked) {
+            tailleChoix = taille.value;
+            break;
+        }
+    }
+    // console.log(nbJChoix,tailleChoix);
+    $.getJSON("/setup/"+nbJChoix+"/"+tailleChoix, (data) => {});
+    showMenu();
+}
+
+function showMenu(){
+    $("#setup").hide();       
+    $("header").text("Bienvenue !");
+    $("#menu").show();
+}
+
 function showJeu(){            // fonction principale qui affiche le jeu une fois qu'un joueur lance la partie
     clear();
     $("header").text("Partie en cours...");
     var div1="<div id='tablier' class='game'></div>";
     var bouton="<button type='button'class='quitterButton red'>Quitter la partie</button>";
     $("body").append(div1,bouton);
-    genereDamier(20, 11, 11);
+    $.getJSON('/recupTaille',(n) => {
+        genereDamier(20,n,n);
+    });
 }
 
 function lancer(){    // Pour lancer la partie
     refreshJoueurs();
     $.getJSON("/lancerPartie",(data) => {});
 }
+
+$.getJSON('/estSetup', (data) => {
+    if(data) showMenu();
+});

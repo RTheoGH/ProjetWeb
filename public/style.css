@@ -9,6 +9,10 @@ body{
   text-align: center;
 }
 
+h1{
+  margin: 0;
+}
+
 .principal{
   position:absolute;
   top:50%;
@@ -16,7 +20,7 @@ body{
   transform:translate(-50%,-50%);
   opacity: 0.9;
   border: 5px solid black;
-  padding: auto;
+  padding: 2em;
   background-color: whitesmoke;
 }
 
@@ -65,4 +69,22 @@ button{
   background-color: green;
 }
 
+input[type="radio"]{
+  width: 1.15em;
+  height: 1.15em;
+  
+}
 
+.left{
+  margin: 1em;
+  text-align: left;
+}
+
+.ligne{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ligne div{
+  flex: 1 0 33%;
+}
