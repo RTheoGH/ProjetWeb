@@ -15,15 +15,15 @@ var jeton = -1, dernierPion = -1;
 var partieLancee=false;
 
 app.get('/', (request,response) => {                          // chemin principal
-    response.sendFile('index.html',{root: __dirname});
+    response.sendFile('public/index.html',{root: __dirname});
 });
 
 app.get('/fichier/:nomFichier', (request,response) => {       // chemin permettant d'utiliser les fichiers
-    response.sendFile(request.params.nomFichier,{root: __dirname});
+    response.sendFile("public/"+request.params.nomFichier,{root: __dirname});
 });
 
 app.get('/jeu', (request,response) => {                       // chemin du jeu
-    response.sendFile('hexagone.html',{root: __dirname});
+    response.sendFile('public/hexagone.html',{root: __dirname});
 });
 
 app.get('/joueurs', (request,response) => {                   // chemin d'affichage des infos joueurs
