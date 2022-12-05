@@ -11,11 +11,11 @@ function refreshJoueurs(){           // fonction pour raffraichir les joueurs pr
 function infos(){     // renvoie les informations sur les joueurs dans la console
     console.log("Joueurs dans la partie :");
     $.getJSON("http://localhost:8888/joueurs",data => {console.log(data);});
-};
+}
 
 function entrerDansLaPartie(){
     nomJoueur = document.getElementById("nom").value;
-    console.log(nomJoueur+" : le frérot veut rentrer")
+    console.log(nomJoueur+" veut entrer")
     if (nomJoueur !="" && nomJoueur != " "){          //evite d'avoir un nom de joueur vide
         $.getJSON("http://localhost:8888/entree/"+nomJoueur,(data) => {
             console.log(data);
@@ -38,7 +38,7 @@ function entrerDansLaPartie(){
     }
     
     refreshJoueurs();
-};
+}
 
 function quitterLaPartie(){
     nomJoueur = document.getElementById("nom").value;
@@ -60,8 +60,9 @@ function quitterLaPartie(){
             }
         });
     }
+    
     refreshJoueurs();
-};
+}
 
 function clear(){                    // fonction pour "clear" la page web afin d'afficher le jeu
     $(".principal").remove();
@@ -110,15 +111,50 @@ function showMenu(){
     $("#menu").show();
 }
 
+
+function afficheScores(tab){
+    tab.forEach((element,index) => {
+        $("#score"+index).text(element); 
+    });
+}
+
+function actualiseDamier(){
+    $.getJSON('/dernierPion', (data) => {
+        $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
+        console.log("on actualise");
+        console.log(data);
+    })
+    
+}
+
+let actualiseDamierInterval=setInterval(actualiseDamier,1000);
+
 function showJeu(){            // fonction principale qui affiche le jeu une fois qu'un joueur lance la partie
     clear();
     $("header").text("Partie en cours...");
+    var tabScore="<table>\
+                    <thead>\
+                        <tr>\
+                            <th colspan='2'>Nombre de pions posés</th>\
+                        </tr>\
+                    </thead>\
+                    <tbody>";
+    joueursPresents.forEach((element,index) => {
+        tabScore+="<tr><td>"+element+"</td><td id='score"+index+"'>0</td></tr>"
+    });
+    tabScore+="</tbody></table>";
     var div1="<div id='tablier' class='game'></div>";
-    var bouton="<button type='button'class='quitterButton red'>Quitter la partie</button>";
-    $("body").append(div1,bouton);
+    var bouton="<button type='button' class='quitterButton red'\
+        onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
+    $("body").append(tabScore,div1,bouton);
     $.getJSON('/recupTaille',(n) => {
         genereDamier(20,n,n);
     });
+}
+
+function quitterLaPartieEnCours(){
+    $.getJSON("http://localhost:8888/sortie/"+joueursPresents,(data) => {});
+    refreshJoueurs();
 }
 
 function lancer(){    // Pour lancer la partie

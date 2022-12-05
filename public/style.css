@@ -61,15 +61,15 @@ button{
   font-size: 16px;
 }
 
-.red{
+.red{      /* couleur rouge */
   background-color:red;
 }
 
-.green{
+.green{      /* couleur verte */
   background-color: green;
 }
 
-input[type="radio"]{
+input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
   width: 1.15em;
   height: 1.15em;
   

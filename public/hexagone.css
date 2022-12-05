@@ -17,3 +17,16 @@
 .chat{
     position:absolute
 }
+
+table{
+    position:absolute;
+    top:35%;
+    left:2%;
+    padding: 1em;
+    border: 2px solid black;
+}
+
+thead{
+    background-color: grey;
+    color: black;
+}

@@ -18,6 +18,12 @@ function creeHexagone(rayon) {
 }
 
 function genereDamier(rayon, nbLignes, nbColonnes) {
+    if(nbLignes==9 && nbColonnes==9){  /* augmente la taille globale du damier*/
+        rayon=rayon+5;
+    };
+    if(nbLignes==19 && nbColonnes==19){  /* reduire la taille globale du damier*/
+        rayon=rayon-5;
+    };
     var i=0;
     distance =  rayon - (Math.sin(1 * Math.PI / 3) * rayon);  // plus grande distance entre l'hexagone et le cercle circonscrit
 
@@ -41,7 +47,7 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .attr("d", d)
                 .attr("stroke", "black")
                 .attr("fill", "white")
-                .attr("id", "h"+(ligne*11+colonne)) // car un id doit commencer par une lettre pour pouvoir être utilisé
+                .attr("id", "h"+(ligne*nbLignes+colonne)) // car un id doit commencer par une lettre pour pouvoir être utilisé
                 .on("click", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
                     console.log(position);

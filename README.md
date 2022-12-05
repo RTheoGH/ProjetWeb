@@ -16,8 +16,7 @@
 
 - Un seul joueur par page web : 100%
 
-- Paramétrage par le premier joueur : 50%
-    > manque la configuration de la taille du damier
+- Paramétrage par le premier joueur : 100%
 
 - Sortie d’un joueur : 50% 
     > manque la sortie d'un joueur en cours de partie

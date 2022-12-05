@@ -17,7 +17,7 @@ var hex = [];
 function initHex(n){
     for (i=0;i<n**2;i++) hex.push(-1);
 }
-var jeton = -1, dernierPion = -1;
+var jeton = 0, dernierPion = -1;
 var partieLancee=false;
 
 app.get('/', (request,response) => {                          // chemin principal
@@ -60,7 +60,7 @@ app.get('/joueurs', (request,response) => {                   // chemin d'affich
 
 app.get('/entree/:nomJoueur', (request,response) => {         // chemin d'entrer des joueurs
     let nomJoueur = request.params.nomJoueur;
-    console.log(nomJoueur+" est rentré");
+    console.log(nomJoueur+" est entré");
     if (joueurs.length<joueursMax){ 
         if (!joueurs.includes(nomJoueur)){
             joueurs.push(nomJoueur);
@@ -71,6 +71,7 @@ app.get('/entree/:nomJoueur', (request,response) => {         // chemin d'entrer
 
 app.get('/sortie/:nomJoueur', (request,response) => {         // chemin de sortie des joueurs
     let nomJoueur = request.params.nomJoueur;
+    console.log(nomJoueur+" est sorti");
     let index = joueurs.indexOf(nomJoueur);
     if (index != -1){
         joueurs.splice(index, 1);
@@ -85,7 +86,7 @@ app.get('/pion/:position/:numJoueur', (request,response) => { // chemin de renvo
         if (position >= 0 && position < 121)
             if (hex[position] == -1){
                 hex[position] = jeton;
-                jeton++; if (jeton == 2) jeton = 0;
+                jeton++; if (jeton == joueursMax) jeton = 0;
                 dernierPion = position;
             }
     }
@@ -97,7 +98,7 @@ app.get('/getPions', (request,response) => {                 // chemin de renvoi
 
 app.get('/dernierPion', (request,response) => {              // chemin de renvoie du dernier pion
     console.log(dernierPion);
-    response.json(dernierPion);
+    response.json({"case":dernierPion,"joueur":jeton});
 });
 
 app.get('/lancerPartie', (request,response) => {             // Pour lancer la partie
