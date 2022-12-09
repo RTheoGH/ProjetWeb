@@ -65,8 +65,32 @@ button{
   background-color:red;
 }
 
+.textred{
+  color:red;
+}
+
+.blue{
+  background-color: blue;
+}
+
+.textblue{
+  color:blue;
+}
+
 .green{      /* couleur verte */
   background-color: green;
+}
+
+.textgreen{
+  color:green;
+}
+
+.orange{
+  background-color: orange;
+}
+
+.textorange{
+  color:orange;
 }
 
 input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
@@ -87,4 +111,23 @@ input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
 
 .ligne div{
   flex: 1 0 33%;
+}
+
+.chat{
+  position:absolute;
+  top:40%;
+  left:70%;
+  transform: translateY(-50%);
+}
+
+#messages{
+  height:40vh;
+  padding:1em;
+  background-color:whitesmoke;
+  overflow-y: scroll;
+}
+
+#messages li{
+  list-style: none;
+  margin-bottom: 0.5em;
 }

@@ -25,14 +25,13 @@
 
 - Hexagone corridors à implémenter 
 
-- Pose d’hexagones : presque terminé
+- Pose d’hexagones : 100%
 
-- Communication des joueurs : à implémenter
-    > faire une messagerie entre les joueurs de la page
+- Communication des joueurs : 100%
 
-- Tableau de "score" : à implémenter
-    > compter le nombre de pions posés etc.
-Total : 28 points sur 20
+- Tableau de "score" : 100%
+
+- Total : 28 points sur 20
 
 ---
 

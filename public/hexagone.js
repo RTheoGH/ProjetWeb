@@ -1,6 +1,5 @@
 //window.addEventListener('load', (event) => { genereDamier(20, 11, 11); });
 
-
 var jeton=0;
 function setJeton(newJeton) {jeton=newJeton};
 var couleursJoueurs=['red','blue','green','orange'];
@@ -51,10 +50,12 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .on("click", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
                     console.log(position);
-                    $.getJSON('/pion/'+position+'/'+jeton, (data)=> {
-                        console.log(data);
-                    });
-                    d3.select(this).attr('fill', couleursJoueurs[jeton]);
+                    // $.getJSON('/pion/'+position+'/'+jeton, (data)=> {
+                    //     console.log(data);
+                    // });
+                    socket.emit('pion',{'position':position,'numJoueur':jeton});
+                    // d3.select(this).attr('fill', couleursJoueurs[jeton]);
+                    // console.log(couleursJoueurs[jeton]);
             });
             }
     }
