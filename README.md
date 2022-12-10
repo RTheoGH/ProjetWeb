@@ -19,10 +19,9 @@
 
 - Paramétrage par le premier joueur : 100%
 
-- Sortie d’un joueur : 50% 
-    > manque la sortie d'un joueur en cours de partie
+- Sortie d’un joueur : 100% 
 
-- Détection automatique de la victoire : à implémenter
+- Détection automatique de la victoire : 50%
 
 - Hexagone corridors à implémenter 
 

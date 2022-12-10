@@ -165,7 +165,7 @@ function showJeu(){
     var chat="<div id='chat' class='chat'>\
         <ul id='messages'></ul>\
         <input id='message' type='text'><button onClick='send()'>Envoyer</button></div>"; // tchat textuel
-    var bouton="<button type='button' class='quitterButton red'\
+    var bouton="<button class='quitterButton red'\
         onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
     $("body").append(tabScore,div1,chat,bouton);
     $.getJSON('/recupTaille',(n) => {
@@ -175,12 +175,14 @@ function showJeu(){
 
 /* Pour quitter la partie en cours */
 function quitterLaPartieEnCours(){
-    $.getJSON("http://localhost:8888/sortie/"+joueursPresents,(data) => {});
+    // $.getJSON("http://localhost:8888/sortie/"+joueursPresents,(data) => {});
+    socket.emit('sortieReq',jeton);
 }
 
 /* Pour lancer la partie */
 function lancer(){    
     socket.emit('lancerPartie');
+    console.log("La partie commence!")
 }
 
 /* Si les paramètres sont déja initialisés, affiche directement le menu de connexion */
@@ -189,3 +191,9 @@ socket.on('estSetupRep', (data) => {
     if(data) showMenu();
 });
 
+socket.on('victoire', (vainqueur) => {
+    var victoire ="<div class='victoire'><div class='textVictoire'>"+vainqueur+" remporte la partie !\
+        <br/><button class='newGameButton'\
+        onClick='window.location.reload()'>Nouvelle Partie</button></div></div>";
+    $("body").append(victoire);
+});

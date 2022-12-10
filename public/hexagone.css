@@ -16,6 +16,13 @@
     padding: 15px 32px;
 }
 
+/* bouton nouvelle partie */
+.newGameButton{
+    color: white;
+    padding: 15px 32px;
+    background-color: black;
+}
+
 /* tableau pose pions */
 table{
     position:absolute;

@@ -128,7 +128,7 @@ input[type="radio"]{
 .chat{
   position:absolute;
   top:40%;
-  left:70%;
+  left:80%;
   transform: translateY(-50%);
 }
 
@@ -144,4 +144,42 @@ input[type="radio"]{
 #messages li{
   list-style: none;
   margin-bottom: 0.5em;
+}
+
+/* fond message de victoire */
+.victoire{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  height: 50%;
+  width: 50%;
+  background-color: red;
+  animation: 2s infinite linear colorful;
+  text-align: center;
+  font-size: 4em;
+}
+
+/* texte de victoire */
+.textVictoire{
+  margin-top: 20%;
+}
+
+/* alterner les couleurs */
+@keyframes colorful {
+  0%{
+    background-color: red;
+  }
+  25%{
+    background-color: yellow;
+  }
+  50%{
+    background-color:royalblue;
+  }
+  75%{
+    background-color: seagreen;
+  }
+  100%{
+    background-color:red;
+  }
 }
