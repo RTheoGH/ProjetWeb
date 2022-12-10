@@ -61,49 +61,60 @@ button{
   font-size: 16px;
 }
 
-.red{      /* couleur rouge */
+/* couleur rouge */
+.red{      
   background-color:red;
 }
 
-.textred{
+/* texte rouge */
+.textred{  
   color:red;
 }
 
-.blue{
+/* couleur bleu */
+.blue{    
   background-color: blue;
 }
 
-.textblue{
+/* texte bleu */
+.textblue{  
   color:blue;
 }
 
-.green{      /* couleur verte */
+/* couleur verte */
+.green{      
   background-color: green;
 }
 
+/* texte vert */
 .textgreen{
   color:green;
 }
 
-.orange{
+/* couleur orange */
+.orange{    
   background-color: orange;
 }
 
+/* texte orange */
 .textorange{
   color:orange;
 }
 
-input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
+/* boutons radio paramètres */
+input[type="radio"]{       
   width: 1.15em;
   height: 1.15em;
   
 }
 
+/* aligner a gauche */
 .left{
   margin: 1em;
   text-align: left;
 }
 
+/* disposition paramètres */
 .ligne{
   display: flex;
   flex-wrap: wrap;
@@ -113,6 +124,7 @@ input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
   flex: 1 0 33%;
 }
 
+/* position du tchat */
 .chat{
   position:absolute;
   top:40%;
@@ -120,6 +132,7 @@ input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
   transform: translateY(-50%);
 }
 
+/* zone du tchat */
 #messages{
   height:40vh;
   padding:1em;
@@ -127,6 +140,7 @@ input[type="radio"]{       /* pour rendre les boutons à cocher plus jolis */
   overflow-y: scroll;
 }
 
+/* liste des messages */
 #messages li{
   list-style: none;
   margin-bottom: 0.5em;

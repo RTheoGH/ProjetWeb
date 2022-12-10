@@ -1,0 +1,43 @@
+anciennes fonctions,textes etc. :
+
+
+// function refreshJoueurs(){           
+//     $.getJSON("/joueurs", (data) => {
+//         joueursPresents=data;
+//     });
+// }
+
+
+// function testSiLancee(){               // fonction pour vérifier si la partie est lancée
+//     // console.log('test');
+//     $.getJSON("/partieLancee", (data) => {
+//         if(data==true){
+//             showJeu();
+//             refreshJoueurs();
+//             clearInterval(testSiLanceeInterval);
+//         }
+//     });
+//     refreshJoueurs();
+// }
+
+//let testSiLanceeInterval=setInterval(testSiLancee,1000); // teste toute les 1 secondes si la partie est bien lancée
+
+// function actualiseDamier(){
+//     $.getJSON('/dernierPion', (data) => {
+//         $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
+//         let now = new Date();
+//         console.log("on actualise "+now.getTime());
+//         console.log(data);
+//     })
+// }
+
+// let actualiseDamierInterval=setInterval(actualiseDamier,2000);
+
+
+// $.getJSON('/estSetup', (data) => {
+//     if(data) showMenu();
+// });
+
+function lancer(){    
+    // $.getJSON("/lancerPartie",(data) => {});
+}
