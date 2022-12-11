@@ -1,5 +1,6 @@
 const { response } = require("express")
 const express = require("express");
+const { cp } = require("fs");
 const app = express();
 const http = require('http');
 const { toUnicode } = require("punycode");
@@ -11,7 +12,9 @@ console.log('Ecoute sur le port 8888') ;
 
 var joueurs = [];
 var rotation = [];
+var taille=0;
 var [caseDepartJ1,caseDepartJ2,caseDepartJ3,caseDepartJ4]=[[],[],[],[]];
+var listeVictoire=[];
 var joueursMax = 0;
 function initJMax(j){
     joueursMax = parseInt(j) || 0;
@@ -33,50 +36,91 @@ function tourNext(tour){
     return tour;
 }
 
-function victoire(jetonJoueur){ //deuxieme parametre depart ?
-    let suite=[];
-        switch(jetonJoueur){
-            case 0 :
-                for(i in depart){
-                    if(hex[i]==0){
-                        for(j in caseDepartJ4){
-                            if(i==j){
-                                console.log('Victoire du joueur 1 !');
-                                finDePartie();
-                            }
-                        }
-                        for(j2 in caseDepartJ2){
-                            if(i==j2) break;
-                            suite.push(i+n-1);
-                        }
-                        suite.push(i+n);
-                    }
-                }
-            victoire(jetonJoueur,suite);
-            break;
-            case 1 :
-                for(i in depart){
-                    if(hex[i]==1){
-                        for(j in caseDepartJ3){
-                            if(i==j){
-                                console.log('Victoire du joueur 2 !');
-                                finDePartie();
-                            }
-                        }
-                        for(j2 in caseDepartJ1){
-                            if(i==j2) break;
-                            suite.push(i-n-1);
-                        }
-                        for(j3 in caseDepartJ4){
-                            if(i==j3) break;
-                            suite.push(i+n);
-                        }
-                        suite.push(i+1);
-                    }
-                }
-            victoire(jetonJoueur,suite);
-            break;
+function victoireRec(jetonJoueur,caseAutours){
+    console.log("caseAutours debut victoire rec :");
+    console.log(caseAutours);
+    let suiteRec=[];
+    for(i in caseAutours){
+        if(!listeVictoire.includes(caseAutours[i])){
+            console.log("caseAutours : ");
+            console.log(caseAutours);
+            suiteRec.push(caseAutours[i]);
+            // listeVictoire.push(suite[i]);
+        }
     }
+    if(suiteRec.length!=0){
+        console.log(jetonJoueur+" caseAutours V :");
+        console.log("liste victoire");
+        console.log(listeVictoire);
+        console.log("suiteRec");
+        console.log(suiteRec);
+        victoire(jetonJoueur,suiteRec);
+    }
+}
+
+function victoire(jetonJoueur,depart){
+    let caseAutours=[];      //caseAutours=i quand 4 joueurs ?
+    for(i of depart){
+        if(hex[i]==jetonJoueur){
+            caseAutours=[];
+            if(!caseDepartJ1.includes(i)){
+                if(hex[i-taille]==jetonJoueur) caseAutours.push(i-taille);
+                if(hex[i-taille+1]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i-taille+1);
+            }
+            if(!caseDepartJ2.includes(i)){
+                if(hex[i-1]==jetonJoueur) caseAutours.push(i-1);
+                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
+            }
+            if(!caseDepartJ3.includes(i)){
+                if(hex[i+1]==jetonJoueur) caseAutours.push(i+1);
+                if(hex[i-taille+1]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
+            }
+            if(!caseDepartJ4.includes(i)){
+                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
+                if(hex[i+taille]==jetonJoueur) caseAutours.push(i+taille);
+            }
+        }
+    }
+    switch(jetonJoueur){
+        case 0 :
+            for(j of caseAutours){
+                if(caseDepartJ4.includes(j)){
+                    console.log('Victoire du joueur 1 !');
+                    finDePartie();
+                }
+            }
+        break;
+        case 1 :
+            for(j of caseAutours){
+                if(caseDepartJ3.includes(j)){
+                    console.log('Victoire du joueur 2 !');
+                    finDePartie();
+                }
+            }
+        break;
+        case 2 :
+            console.log("caseAutours de J3 : ");
+            console.log(caseAutours);
+            for(j of caseAutours){
+                if(caseDepartJ2.includes(j)){
+                    console.log('Victoire du joueur 3 !');
+                    finDePartie();
+                }
+            }
+        break;
+        case 3 :
+            console.log("caseAutours de J4 : ");
+            console.log(caseAutours);
+            for(j of caseAutours){
+                if(caseDepartJ1.includes(j)){
+                    console.log('Victoire du joueur 4 !');
+                    finDePartie();
+                }
+            }
+        break;
+    }
+    if(!listeVictoire.includes(i)) listeVictoire.push(i);
+    victoireRec(jetonJoueur,caseAutours);
 }
 
 /* met fin à la partie et envoie un message de renvoie des joueurs au lobby */
@@ -203,32 +247,43 @@ io.on("connection", (socket) => {
     socket.on("setup",(data) => {
         if (!partieLancee){
             let nbJ = data.nbJChoix;
-            let taille = data.tailleChoix;
+            taille = parseInt(data.tailleChoix);
             console.log(nbJ,taille);
             initJMax(nbJ);
             initHex(taille);
             for(let i=0;i<taille**2;i++){
-                for(let j=taille+1;j<(taille**2)-taille;j+taille){
-                    if(0<=i<=taille){
+                //console.log("i :"+i);
+                    if (0<=i && i<taille){
+                        //console.log("in j1:"+i);
                         caseDepartJ1.push(i);
                     }
-                    if(i==j){
-                        caseDepartJ2.push(i);
+                    let j=0;
+                    while(j<taille){
+                        if(i==j*taille){
+                            //console.log("in j2:"+i);
+                            caseDepartJ2.push(i);
+                        }
+                        j++;
                     }
-                    if(i==j+taille-1){
-                        caseDepartJ3.push(i);
+                    j=0;
+                    while(j<taille){
+                        if(i==j*taille+(taille-1)){
+                            //console.log("in j3:"+i);
+                            caseDepartJ3.push(i);
+                        }
+                        j++;
                     }
-                    if((taille**2)-taille<i<=taille**2){
+                    if(i>=(taille**2)-taille && i<taille**2){
+                        //console.log("in j4:"+i);
                         caseDepartJ4.push(i);
                     }
-                }
             }
-            console.log(caseDepartJ1);
-            console.log(caseDepartJ2);
-            console.log(caseDepartJ3);
-            console.log(caseDepartJ4);
-            console.log(hex);
-            console.log(joueursMax);
+            // console.log(caseDepartJ1);
+            // console.log(caseDepartJ2);
+            // console.log(caseDepartJ3);
+            // console.log(caseDepartJ4);
+            // console.log(hex);
+            // console.log(joueursMax);
         }
     });
     socket.on('estSetupReq',() => {
@@ -293,7 +348,22 @@ io.on("connection", (socket) => {
                     console.log("jeton : "+jeton);
                     dernierPion = position;
                     io.emit('dernierPion',{"case":dernierPion,"joueur":dernierJeton});
-                    victoire(data.numJoueur); //deuxieme parametre depart ?
+                    listeVictoire=[];
+                    console.log("dernierPion "+dernierPion)
+                    switch(data.numJoueur){
+                        case 0:
+                            victoire(0,caseDepartJ1);
+                            break;
+                        case 1:
+                            victoire(1,caseDepartJ2);
+                            break;
+                        case 2:
+                            victoire(2,caseDepartJ3);
+                            break;
+                        case 3:
+                            victoire(3,caseDepartJ4);
+                            break;
+                    }
                 }
         }
     });
