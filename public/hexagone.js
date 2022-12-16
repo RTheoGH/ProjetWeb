@@ -49,7 +49,7 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .on("auxclick", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
                     console.log(position);
-                    socket.emit('pion',{'position':position,'numJoueur':jeton});
+                    socket.emit('pion',{'isCorridor':isCorridor,'position':position,'numJoueur':jeton});
                 });
             }
     }

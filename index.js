@@ -23,6 +23,7 @@ var hex = [];
 function initHex(n){
     for (i=0;i<n**2;i++) hex.push(-1);
 }
+var isCorridor=False;
 var jeton = 0, dernierPion = -1;
 var dernierJeton = -1;
 var partieLancee=false;
@@ -339,6 +340,8 @@ io.on("connection", (socket) => {
     });
     socket.on('pion',(data) => {
         console.log("numJoueur : "+data.numJoueur);
+        isCorridor=False;
+        if(data.isCorridor) isCorridor=True;
         if (data.numJoueur == jeton){
             let position = parseInt(data.position);
             if (position >= 0 && position <hex.length)
@@ -350,7 +353,7 @@ io.on("connection", (socket) => {
                     jeton=tourNext(jeton);
                     console.log("jeton : "+jeton);
                     dernierPion = position;
-                    io.emit('dernierPion',{"case":dernierPion,"joueur":dernierJeton});
+                    io.emit('dernierPion',{'isCorridor':isCorridor,"case":dernierPion,"joueur":dernierJeton});
                     listeVictoire=[];
                     console.log("dernierPion "+dernierPion)
                     switch(data.numJoueur){
