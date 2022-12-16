@@ -30,9 +30,9 @@ function listeJoueurs(joueurs){
 
 /* fonction pour entrer dans la partie */
 function entrerDansLaPartie(){
-    nomJoueur = document.getElementById("nom").value;
+    nomJoueur = document.getElementById("nom").value.trim().replace(/[^a-zA-Z0-9 ]/g,'');
     console.log(nomJoueur+" veut entrer")
-    if (nomJoueur !="" && nomJoueur != " "){          //evite d'avoir un nom de joueur vide
+    if (nomJoueur !=""){          //evite d'avoir un nom de joueur vide
         //$.getJSON("http://localhost:8888/entree/"+nomJoueur,(data) => {   // ancien JSON
         socket.emit('entreeReq',nomJoueur);                                 // remplacement par socket
         socket.on('entreeRep', (data) => {   
@@ -56,8 +56,8 @@ function entrerDansLaPartie(){
 
 /* fonction pour quitter la partie */
 function quitterLaPartie(){
-    nomJoueur = document.getElementById("nom").value;
-    if (nomJoueur !="" && nomJoueur != " "){
+    nomJoueur = document.getElementById("nom").value.trim().replace(/[^a-zA-Z0-9 ]/g,'');
+    if (nomJoueur !=""){
         // $.getJSON("http://localhost:8888/sortie/"+nomJoueur,(data) => {
         socket.emit('sortieReq',nomJoueur);
         socket.on('sortieRep', (data) => {
@@ -138,7 +138,7 @@ socket.on('dernierPion',(data) => {
 
 /* fonction pour envoyer un message */
 function send(){
-    let message = $('#message').val().trim();
+    let message = $('#message').val().trim().replace(/[^a-zA-Z0-9 ]/g,'');
     if (!message==""){
         console.log(message);
         socket.emit('envoieMessage',{'auteur':nomJoueur,'message':message,'numeroJeton':jeton});

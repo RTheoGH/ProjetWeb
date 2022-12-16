@@ -26,8 +26,7 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
     var i=0;
     distance =  rayon - (Math.sin(1 * Math.PI / 3) * rayon);  // plus grande distance entre l'hexagone et le cercle circonscrit
 
-    d3.select("#tablier").append("svg").attr("width", (nbLignes*2)*2*rayon).attr("height",
-    nbLignes*2*rayon);
+    d3.select("#tablier").append("svg").attr("width", (nbLignes*2)*2*rayon).attr("height",nbLignes*2*rayon);
     var hexagone = creeHexagone(rayon);
     for (var ligne=0; ligne < nbLignes; ligne++) {
         i++;
@@ -50,13 +49,8 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .on("click", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
                     console.log(position);
-                    // $.getJSON('/pion/'+position+'/'+jeton, (data)=> {
-                    //     console.log(data);
-                    // });
                     socket.emit('pion',{'position':position,'numJoueur':jeton});
-                    // d3.select(this).attr('fill', couleursJoueurs[jeton]);
-                    // console.log(couleursJoueurs[jeton]);
-            });
+                });
             }
     }
 }
