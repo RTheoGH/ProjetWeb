@@ -38,27 +38,26 @@ function tourNext(tour){
     return tour;
 }
 
-function victoireRec(jetonJoueur,caseAutours){
-    console.log("caseAutours debut victoire rec :");
-    console.log(caseAutours);
+function victoireRec(jetonJoueur,caseAutours){      // vérifie que l'on ne repasse pas sur les cases précédentes
+    // console.log("caseAutours debut victoire rec :");
+    // console.log(caseAutours);
     let suiteRec=[];
-    console.log("caseAutours du joueur "+jetonJoueur);
-    console.log("liste victoire");
-    console.log(listeVictoire);
+    // console.log("caseAutours du joueur "+jetonJoueur);
+    // console.log("liste victoire");
+    // console.log(listeVictoire);
     for(i in caseAutours){
         if(!listeVictoire.includes(caseAutours[i])){
-            console.log("caseAutours : ");
-            console.log(caseAutours);
+            // console.log("caseAutours : ");
+            // console.log(caseAutours);
             suiteRec.push(caseAutours[i]);
-            // listeVictoire.push(suite[i]);
         }
     }
     if(suiteRec.length!=0){
-        console.log(jetonJoueur+" caseAutours  :");
-        console.log("liste victoire");
-        console.log(listeVictoire);
-        console.log("suiteRec");
-        console.log(suiteRec);
+        // console.log(jetonJoueur+" caseAutours  :");
+        // console.log("liste victoire");
+        // console.log(listeVictoire);
+        // console.log("suiteRec");
+        // console.log(suiteRec);
         victoire(jetonJoueur,suiteRec);
     }
 }
@@ -67,83 +66,83 @@ function victoire(jetonJoueur,depart){
     let caseAutours=[];
     for(i of depart){
         switch(hex[i]){
-            case(-2):
+            case(-2):               // vérifie en \ les cases autours du corridor
                 if(hex[i-taille]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille);
                 if(hex[i+taille]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i+taille);
                 if(!listeVictoire.includes(i)) listeVictoire.push(i);
                 break;
-            case(-3):
+            case(-3):               // vérifie en / les cases autours du corridor
                 if(hex[i-taille+1]==jetonJoueur && !caseDepartJ3.includes(i) && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
                 if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i) && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
                 if(!listeVictoire.includes(i)) listeVictoire.push(i);
                 break;
-            case(-4):
+            case(-4):               // vérifie en - les cases autours du corridor
                 if(hex[i-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i-1);
                 if(hex[i+1]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i+1);
                 if(!listeVictoire.includes(i)) listeVictoire.push(i);
                 break;
-            case (jetonJoueur):
+            case (jetonJoueur):         // vérifie tout les cases autours de la case traitée 
                 caseAutours=[];
-                if(!caseDepartJ1.includes(i)){
+                if(!caseDepartJ1.includes(i)){              // vérifie que l'on n'analyse pas les cases hors champs au dessus
                     if(hex[i-taille]==jetonJoueur || hex[i-taille]==-2) caseAutours.push(i-taille);
                     if(hex[i-taille+1]==jetonJoueur || hex[i-taille+1]==-3 && !caseDepartJ3.includes(i)) caseAutours.push(i-taille+1);
                 }
-                if(!caseDepartJ2.includes(i)){
+                if(!caseDepartJ2.includes(i)){              // vérifie que l'on n'analyse pas les cases hors champs à gauche
                     if(hex[i-1]==jetonJoueur|| hex[i-1]==-4) caseAutours.push(i-1);
                     if(hex[i+taille-1]==jetonJoueur || hex[i+taille-1]==-3 && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
                 }
-                if(!caseDepartJ3.includes(i)){
+                if(!caseDepartJ3.includes(i)){              // vérifie que l'on n'analyse pas les cases hors champs à droite
                     if(hex[i+1]==jetonJoueur || hex[i+1]==-4) caseAutours.push(i+1);
                     if(hex[i-taille+1]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
                 }
-                if(!caseDepartJ4.includes(i)){
+                if(!caseDepartJ4.includes(i)){              // vérifie que l'on n'analyse pas les cases hors champs en dessous
                     if(hex[i+taille]==jetonJoueur || hex[i+taille]==-2) caseAutours.push(i+taille);
                     if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
                 }
-                if(!listeVictoire.includes(i)) listeVictoire.push(i);
+                if(!listeVictoire.includes(i)) listeVictoire.push(i);   // ajoute la case qui vient d'être traitée à liste victoire pour ne pas la retraitée ( et éviter une boucle infini )
             break;
         }
         
     }
     switch(jetonJoueur){
-        case 0 :
+        case 0 :            // vérifie si le joueur 1 a gagné
             for(j of caseAutours){
-                if(caseDepartJ4.includes(j)){
+                if(caseDepartJ4.includes(j) && compteurCorridors[0]>2){
                     console.log('Victoire du joueur 1 !');
                     finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
-        case 1 :
+        case 1 :            // vérifie si le joueur 2 a gagné
             for(j of caseAutours){
-                if(caseDepartJ3.includes(j)){
+                if(caseDepartJ3.includes(j) && compteurCorridors[0]>2){
                     console.log('Victoire du joueur 2 !');
                     finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
-        case 2 :
+        case 2 :            // vérifie si le joueur 3 a gagné
             console.log("caseAutours de J3 : ");
             console.log(caseAutours);
             for(j of caseAutours){
-                if(caseDepartJ3.includes(j)){
+                if(caseDepartJ3.includes(j) && compteurCorridors[0]>2){
                     console.log('Victoire du joueur 3 !');
                     finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
-        case 3 :
+        case 3 :            // vérifie si le joueur 4 a gagné
             console.log("caseAutours de J4 : ");
             console.log(caseAutours);
             for(j of caseAutours){
-                if(caseDepartJ4.includes(j)){
+                if(caseDepartJ4.includes(j) && compteurCorridors[0]>2){
                     console.log('Victoire du joueur 4 !');
                     finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
     }
-    victoireRec(jetonJoueur,caseAutours);
+    victoireRec(jetonJoueur,caseAutours);   // envoie la liste de cases autours à victoire rec
 }
 
 /* met fin à la partie et envoie un message de renvoie des joueurs au lobby */
