@@ -35,6 +35,11 @@
 
 ---
 
+## Installer les packages
+```bash
+npm install
+```
+
 ## Pour lancer le jeu 
 ```bash
 node index.js
