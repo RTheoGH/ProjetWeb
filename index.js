@@ -63,27 +63,46 @@ function victoireRec(jetonJoueur,caseAutours){
 }
 
 function victoire(jetonJoueur,depart){
-    let caseAutours=[];      //caseAutours=i quand 4 joueurs ?
+    let caseAutours=[];
     for(i of depart){
-        if(hex[i]==jetonJoueur){
-            caseAutours=[];
-            if(!caseDepartJ1.includes(i)){
-                if(hex[i-taille]==jetonJoueur) caseAutours.push(i-taille);
-                if(hex[i-taille+1]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i-taille+1);
-            }
-            if(!caseDepartJ2.includes(i)){
-                if(hex[i-1]==jetonJoueur) caseAutours.push(i-1);
-                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
-            }
-            if(!caseDepartJ3.includes(i)){
-                if(hex[i+1]==jetonJoueur) caseAutours.push(i+1);
-                if(hex[i-taille+1]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
-            }
-            if(!caseDepartJ4.includes(i)){
-                if(hex[i+taille]==jetonJoueur) caseAutours.push(i+taille);
-                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
-            }
+        switch(hex[i]){
+            case(-2):
+                if(hex[i-taille]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille);
+                if(hex[i+taille]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i+taille);
+                if(!listeVictoire.includes(i)) listeVictoire.push(i);
+                break;
+            case(-3):
+                if(hex[i-taille+1]==jetonJoueur && !caseDepartJ3.includes(i) && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
+                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i) && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
+                if(!listeVictoire.includes(i)) listeVictoire.push(i);
+                break;
+            case(-4):
+                if(hex[i-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i-1);
+                if(hex[i+1]==jetonJoueur && !caseDepartJ3.includes(i)) caseAutours.push(i+1);
+                if(!listeVictoire.includes(i)) listeVictoire.push(i);
+                break;
+            case (jetonJoueur):
+                caseAutours=[];
+                if(!caseDepartJ1.includes(i)){
+                    if(hex[i-taille]==jetonJoueur || hex[i-taille]==-2) caseAutours.push(i-taille);
+                    if(hex[i-taille+1]==jetonJoueur || hex[i-taille+1]==-3 && !caseDepartJ3.includes(i)) caseAutours.push(i-taille+1);
+                }
+                if(!caseDepartJ2.includes(i)){
+                    if(hex[i-1]==jetonJoueur|| hex[i-1]==-4) caseAutours.push(i-1);
+                    if(hex[i+taille-1]==jetonJoueur || hex[i+taille-1]==-3 && !caseDepartJ4.includes(i)) caseAutours.push(i+taille-1);
+                }
+                if(!caseDepartJ3.includes(i)){
+                    if(hex[i+1]==jetonJoueur || hex[i+1]==-4) caseAutours.push(i+1);
+                    if(hex[i-taille+1]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
+                }
+                if(!caseDepartJ4.includes(i)){
+                    if(hex[i+taille]==jetonJoueur || hex[i+taille]==-2) caseAutours.push(i+taille);
+                    if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
+                }
+                if(!listeVictoire.includes(i)) listeVictoire.push(i);
+            break;
         }
+        
     }
     switch(jetonJoueur){
         case 0 :
@@ -123,7 +142,6 @@ function victoire(jetonJoueur,depart){
             }
         break;
     }
-    if(!listeVictoire.includes(i)) listeVictoire.push(i);
     victoireRec(jetonJoueur,caseAutours);
 }
 
