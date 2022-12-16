@@ -46,10 +46,15 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .attr("stroke", "black")
                 .attr("fill", "white")
                 .attr("id", "h"+(ligne*nbLignes+colonne)) // car un id doit commencer par une lettre pour pouvoir être utilisé
-                .on("auxclick", function(d) {
+                .on("click", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
+                    let typePion = document.querySelector('input[name="swap"]:checked').id;
+                    console.log("typePion : "+typePion)
                     console.log(position);
-                    socket.emit('pion',{'isCorridor':isCorridor,'position':position,'numJoueur':jeton});
+                    socket.emit('pion',{'typePion':typePion,'position':position,'numJoueur':jeton});
+                    console.log("typePion hexagone apres emit : "+typePion);
+                    // if(typePion=="pion")
+                    // d3.select(this).attr('fill', couleursJoueurs[jeton]);
                 });
             }
     }
@@ -62,17 +67,17 @@ function poseCorridor(direction,position) {
     point1 = [];
     point2 = [];
     switch (direction) {
-    case "topleft_bottomright":
+    case "TLBR": //topleft_bottomright
             point1 = [(parseFloat(points[0].split(",")[0].split("M")[1]) + parseFloat(points[5].split(",")[0]))/2, (parseFloat(points[0].split(",")[1]) + parseFloat(points[5].split(",")[1]))/2];
             point2 = [(parseFloat(points[2].split(",")[0]) + parseFloat(points[3].split(",")[0]))/2, (parseFloat(points[2].split(",")[1]) + parseFloat(points[3].split(",")[1]))/2];
         break;
-        case "topright_bottomleft":
+        case "TRBL": //topright_bottomleft
             point1 = [(parseFloat(points[0].split(",")[0].split("M")[1]) + parseFloat(points[1].split(",")[0].split("L")[1]))/2, (parseFloat(points[0].split(",")[1]) + parseFloat(points[1].split(",")[1]))/2];
             console.log(point1);
             point2 = [(parseFloat(points[3].split(",")[0]) + parseFloat(points[4].split(",")[0]))/2, (parseFloat(points[3].split(",")[1]) + parseFloat(points[4].split(",")[1]))/2];
             console.log(point2);
         break;
-        case "middleleft_middleright":
+        case "MLMR": //middleleft_middleright
             point1 = [(parseFloat(points[1].split(",")[0].split("L")[1]) + parseFloat(points[2].split(",")[0]))/2, (parseFloat(points[1].split(",")[1]) + parseFloat(points[2].split(",")[1]))/2];
             console.log(point1);
             point2 = [(parseFloat(points[4].split(",")[0]) + parseFloat(points[5].split(",")[0]))/2, (parseFloat(points[4].split(",")[1]) + parseFloat(points[5].split(",")[1]))/2];

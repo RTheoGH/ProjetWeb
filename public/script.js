@@ -5,6 +5,7 @@ socket.on("hello from server", () =>  {
 var nomJoueur="";
 var joueursPresents=[];
 $("#menu").hide();
+var compteurC=[0,0,0,0];
 
 /* Raffraichie les joueurs présents */
 socket.on('refreshJ', (data) => {
@@ -137,11 +138,22 @@ function afficheCorridors(tab){
 
 /* actualise le damier lorqu'un joueur pose un pion */
 socket.on('dernierPion',(data) => {
-    if(data.isCorridor){
-        poseCorridor(data.direction, "h"+data.case);
+    console.log("type du pion : "+data.typePion);
+    let direction = (data.typePion).substring(8);
+    console.log(direction);
+    if(data.typePion!="pion"){
+        poseCorridor(direction, "h"+data.case);
         oldCorridor= $("#corridor"+data.joueur).text();
         $("#corridor"+data.joueur).text(parseInt(oldCorridor)+1);
         console.log("on actualise corridors posés");
+        compteurC[data.joueur]+=1;
+        console.log("Compteur de corridors :"+compteurC);
+        // if(compteurC[data.joueur]==3){
+        //     $("#pion").prop("checked",true);
+        //     $("#corridorTLBR").prop("disabled",true);
+        //     $("#corridorTRBL").prop("disabled",true);
+        //     $("#corridorMLMR").prop("disabled",true);
+        // }
     }
     else{
         $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
@@ -188,6 +200,15 @@ function showJeu(){
     joueursPresents.forEach((element,index) => {
         tabCorridor+="<tr><td>"+element+"</td><td id='corridor"+index+"'>0</td></tr>"
     });
+    var swap="<div class='switchPC'>\
+            <input name='swap' id='pion' type='radio' value='Pion' checked />\
+            <label for='pion'>Pion</label><br/>\
+            <input name='swap' id='corridorTLBR' type='radio'/>\
+            <label for='corridorTLBR'>Corridor \\</label><br/>\
+            <input name='swap' id='corridorTRBL' type='radio'/>\
+            <label for='corridorTRBL'>Corridor /</label><br/>\
+            <input name='swap' id='corridorMLMR' type='radio'/>\
+            <label for='corridorMLMR'>Corridor -</label><br/></div>";
     var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"
     var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"
     var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"
@@ -199,13 +220,13 @@ function showJeu(){
     var bouton="<button class='quitterButton red'\
         onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
     if(joueursPresents.length==2){
-        $("body").append(tabScore,tabCorridor,top,gauche,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,swap,top,gauche,div1,chat,bouton);
     }
     if(joueursPresents.length==3){
-        $("body").append(tabScore,tabCorridor,top,gauche,droite,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,swap,top,gauche,droite,div1,chat,bouton);
     }
     if(joueursPresents.length==4){
-        $("body").append(tabScore,tabCorridor,top,gauche,droite,bas,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,swap,top,gauche,droite,bas,div1,chat,bouton);
     }
     // $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
     $.getJSON('/recupTaille',(n) => {
@@ -225,6 +246,8 @@ function lancer(){
     console.log("La partie commence!")
 }
 
+
+
 /* Si les paramètres sont déja initialisés, affiche directement le menu de connexion */
 socket.emit('estSetupReq');
 socket.on('estSetupRep', (data) => {
@@ -236,4 +259,5 @@ socket.on('victoire', (vainqueur) => {
         <br/><button class='newGameButton'\
         onClick='window.location.reload()'>Nouvelle Partie</button></div></div>";
     $("body").append(victoire);
+    compteur=[0,0,0,0];
 });

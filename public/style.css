@@ -271,13 +271,19 @@ thead{
 /* tableau des pions posés */
 .tabPion{
   position:absolute;
-  top:35%;
+  top:25%;
   left:2%;
 }
 
 /* tableau des corridors posés */
 .tabCorridor{
   position:absolute;
-  top:50%;
-  left:2%;
+  top:40%;
+  left:3.5%;
+}
+
+.switchPC{
+  position:absolute;
+  top:55%;
+  left:5.5%;
 }
