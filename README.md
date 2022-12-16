@@ -16,22 +16,35 @@
 ## Liste des fonctionnalités implémentés
 
 - Un seul joueur par page web
+    > Limite de joueur pouvant rejoindre la partie par page web.
 
 - Paramétrage par le premier joueur
+    > Le premier joueur parametre la partie, les joueurs se connectant ensuite sont dirigés directement vers le menu de connexion.
 
 - Sortie d’un joueur
+    > Un joueur peut quitter la partie avant que celle-ci se lance.
 
 - Sortie d'un joueur en cours de partie
+    > Un joueur peut aussi quitter la partie lorqu'elle est en cours.Ces pions resteront sur le plateau.
 
 - Détection automatique de la victoire
-
-- Hexagone corridors (à implémenter)
+    > Lorqu'un joueur reussit a relier deux bords du plateau il gagne la partie.
+    > De plus, si tous les autres joueurs ont quitté la partie et qu'il reste un seul joueur, ce joueur remporte la partie automatiquement.
 
 - Pose d’hexagones
+    > Les joueurs posent des hexagones sur le damier.
 
-- Communication des joueurs (tchat)
+- Hexagone corridors
+    > Les joueurs peuvent poser des "corridors", des voies à sens unique.
 
-- Tableau de "score"
+- Communication des joueurs :
+    > Tchat textuel (protégé : pour eviter de créer des boutons et autres).
+
+- Tableau Pions :
+    > Compte le nombre de pions posés par les joueurs.
+
+- Tableau Corridors : 
+    > Compte le nombre de corridors posés par les joueurs (limité à 3).
 
 ---
 

@@ -187,7 +187,7 @@ function showJeu(){
     var tabScore="<table class='tabPion'><thead>\
                         <tr><th colspan='2'>Nombre de pions posés</th></tr>\
                         </thead>\
-                    <tbody>";
+                    <tbody>";               // tableau du nombre de pions posés
     //console.log(joueursPresents);
     joueursPresents.forEach((element,index) => {
         tabScore+="<tr><td>"+element+"</td><td id='score"+index+"'>0</td></tr>"
@@ -197,7 +197,7 @@ function showJeu(){
     var tabCorridor="<table class='tabCorridor'><thead>\
                         <tr><th colspan='2'>Corridors posés</th></tr>\
                         </thead>\
-                    <tbody>";
+                    <tbody>";                 // tableau du nombre de corridors posés
     joueursPresents.forEach((element,index) => {
         tabCorridor+="<tr><td>"+element+"</td><td id='corridor"+index+"'>0</td></tr>"
     });
@@ -210,25 +210,25 @@ function showJeu(){
             <input name='swap' id='corridorTRBL' type='radio'/>\
             <label for='corridorTRBL'>Corridor /</label><br/>\
             <input name='swap' id='corridorMLMR' type='radio'/>\
-            <label for='corridorMLMR'>Corridor -</label><br/></div>";
+            <label for='corridorMLMR'>Corridor -</label><br/></div>"; // boutons radios pour poser un pion ou un corridor
 
-    var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"
-    var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"
-    var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"
-    var bas="<div id='j4' class='nomJ basJ orange'>"+joueursPresents[3]+"</div>"
+    var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"      // nom joueur 1 en haut
+    var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"      // nom joueur 2 a gauche
+    var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"     // nom joueur 3 a droite
+    var bas="<div id='j4' class='nomJ basJ orange'>"+joueursPresents[3]+"</div>"    // nom joueur 4 en bas
     var div1="<div id='tablier' class='game'></div>";   // jeu de hex
     var chat="<div id='chat' class='chat'>\
         <ul id='messages'></ul>\
         <input id='message' type='text'><button onClick='send()'>Envoyer</button></div>"; // tchat textuel
     var bouton="<button class='quitterButton red'\
-        onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
-    if(joueursPresents.length==2){
+        onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";        // bouton quitter la partie en cours
+    if(joueursPresents.length==2){      // si on lance une partie a 2 joueurs
         $("body").append(tabScore,tabCorridor,swap,top,gauche,div1,chat,bouton);
     }
-    if(joueursPresents.length==3){
+    if(joueursPresents.length==3){      // si on lance une partie a 3 joueurs
         $("body").append(tabScore,tabCorridor,swap,top,gauche,droite,div1,chat,bouton);
     }
-    if(joueursPresents.length==4){
+    if(joueursPresents.length==4){      // si on lance une partie a 4 joueurs
         $("body").append(tabScore,tabCorridor,swap,top,gauche,droite,bas,div1,chat,bouton);
     }
     // $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
@@ -249,14 +249,13 @@ function lancer(){
     console.log("La partie commence!")
 }
 
-
-
 /* Si les paramètres sont déja initialisés, affiche directement le menu de connexion */
 socket.emit('estSetupReq');
 socket.on('estSetupRep', (data) => {
     if(data) showMenu();
 });
 
+/* affiche la victoire puis propose de relancer une partie */
 socket.on('victoire', (vainqueur) => {
     var victoire ="<div class='victoire'><div class='textVictoire'>"+vainqueur+" remporte la partie !\
         <br/><button class='newGameButton'\
