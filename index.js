@@ -40,6 +40,9 @@ function victoireRec(jetonJoueur,caseAutours){
     console.log("caseAutours debut victoire rec :");
     console.log(caseAutours);
     let suiteRec=[];
+    console.log("caseAutours du joueur "+jetonJoueur);
+    console.log("liste victoire");
+    console.log(listeVictoire);
     for(i in caseAutours){
         if(!listeVictoire.includes(caseAutours[i])){
             console.log("caseAutours : ");
@@ -49,7 +52,7 @@ function victoireRec(jetonJoueur,caseAutours){
         }
     }
     if(suiteRec.length!=0){
-        console.log(jetonJoueur+" caseAutours V :");
+        console.log(jetonJoueur+" caseAutours  :");
         console.log("liste victoire");
         console.log(listeVictoire);
         console.log("suiteRec");
@@ -76,8 +79,8 @@ function victoire(jetonJoueur,depart){
                 if(hex[i-taille+1]==jetonJoueur && !caseDepartJ1.includes(i)) caseAutours.push(i-taille+1);
             }
             if(!caseDepartJ4.includes(i)){
-                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
                 if(hex[i+taille]==jetonJoueur) caseAutours.push(i+taille);
+                if(hex[i+taille-1]==jetonJoueur && !caseDepartJ2.includes(i)) caseAutours.push(i+taille-1);
             }
         }
     }
@@ -86,7 +89,7 @@ function victoire(jetonJoueur,depart){
             for(j of caseAutours){
                 if(caseDepartJ4.includes(j)){
                     console.log('Victoire du joueur 1 !');
-                    finDePartie();
+                    finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
@@ -94,7 +97,7 @@ function victoire(jetonJoueur,depart){
             for(j of caseAutours){
                 if(caseDepartJ3.includes(j)){
                     console.log('Victoire du joueur 2 !');
-                    finDePartie();
+                    finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
@@ -102,9 +105,9 @@ function victoire(jetonJoueur,depart){
             console.log("caseAutours de J3 : ");
             console.log(caseAutours);
             for(j of caseAutours){
-                if(caseDepartJ2.includes(j)){
+                if(caseDepartJ3.includes(j)){
                     console.log('Victoire du joueur 3 !');
-                    finDePartie();
+                    finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
@@ -112,9 +115,9 @@ function victoire(jetonJoueur,depart){
             console.log("caseAutours de J4 : ");
             console.log(caseAutours);
             for(j of caseAutours){
-                if(caseDepartJ1.includes(j)){
+                if(caseDepartJ4.includes(j)){
                     console.log('Victoire du joueur 4 !');
-                    finDePartie();
+                    finDePartie(joueurs[jetonJoueur]);
                 }
             }
         break;
@@ -126,6 +129,7 @@ function victoire(jetonJoueur,depart){
 /* met fin à la partie et envoie un message de renvoie des joueurs au lobby */
 function finDePartie(vainqueur){
     partieLancee=false;
+    io.emit('victoire',vainqueur);
     hex = [];
     joueurs = [];
     rotation = [];
@@ -133,7 +137,6 @@ function finDePartie(vainqueur){
     joueursMax = 0;
     jeton = 0, dernierPion = -1;
     dernierJeton = -1;
-    io.emit('victoire',vainqueur);
 }
 
 // Partie Express //
@@ -358,10 +361,10 @@ io.on("connection", (socket) => {
                             victoire(1,caseDepartJ2);
                             break;
                         case 2:
-                            victoire(2,caseDepartJ3);
+                            victoire(2,caseDepartJ2);
                             break;
                         case 3:
-                            victoire(3,caseDepartJ4);
+                            victoire(3,caseDepartJ1);
                             break;
                     }
                 }

@@ -14,8 +14,10 @@ socket.on('refreshJ', (data) => {
 
 /* renvoie les informations sur les joueurs dans la console */
 function infos(){     
-    console.log("Joueurs dans la partie :");
-    $.getJSON("http://localhost:8888/joueurs",data => {console.log(data);});
+    // console.log("Joueurs dans la partie :");
+    $.getJSON("http://localhost:8888/joueurs",data => {
+        alert("Joueurs dans la partie : "+data)
+    });
 }
 
 /* affiche les joueurs ayant rejoint à l'écran */
@@ -136,9 +138,12 @@ socket.on('dernierPion',(data) => {
 
 /* fonction pour envoyer un message */
 function send(){
-    let message = $('#message').val();
-    console.log(message);
-    socket.emit('envoieMessage',{'auteur':nomJoueur,'message':message,'numeroJeton':jeton});
+    let message = $('#message').val().trim();
+    if (!message==""){
+        console.log(message);
+        socket.emit('envoieMessage',{'auteur':nomJoueur,'message':message,'numeroJeton':jeton});
+    }
+    $('#message').val("");
 }
 
 /* reception des messages */
@@ -161,13 +166,26 @@ function showJeu(){
         tabScore+="<tr><td>"+element+"</td><td id='score"+index+"'>0</td></tr>"
     });
     tabScore+="</tbody></table>";
+    var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"
+    var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"
+    var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"
+    var bas="<div id='j4' class='nomJ basJ orange'>"+joueursPresents[3]+"</div>"
     var div1="<div id='tablier' class='game'></div>";   // jeu de hex
     var chat="<div id='chat' class='chat'>\
         <ul id='messages'></ul>\
         <input id='message' type='text'><button onClick='send()'>Envoyer</button></div>"; // tchat textuel
     var bouton="<button class='quitterButton red'\
         onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
-    $("body").append(tabScore,div1,chat,bouton);
+    if(joueursPresents.length==2){
+        $("body").append(tabScore,top,gauche,div1,chat,bouton);
+    }
+    if(joueursPresents.length==3){
+        $("body").append(tabScore,top,gauche,droite,div1,chat,bouton);
+    }
+    if(joueursPresents.length==4){
+        $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
+    }
+    // $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
     $.getJSON('/recupTaille',(n) => {
         genereDamier(20,n,n);
     });

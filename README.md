@@ -15,23 +15,23 @@
 
 ## Liste des fonctionnalités implémentés
 
-- Un seul joueur par page web : 100%
+- Un seul joueur par page web
 
-- Paramétrage par le premier joueur : 100%
+- Paramétrage par le premier joueur
 
-- Sortie d’un joueur : 100% 
+- Sortie d’un joueur
 
-- Détection automatique de la victoire : 50%
+- Sortie d'un joueur en cours de partie
 
-- Hexagone corridors à implémenter 
+- Détection automatique de la victoire
 
-- Pose d’hexagones : 100%
+- Hexagone corridors (à implémenter)
 
-- Communication des joueurs : 100%
+- Pose d’hexagones
 
-- Tableau de "score" : 100%
+- Communication des joueurs (tchat)
 
-- Total : 28 points sur 20
+- Tableau de "score"
 
 ---
 
