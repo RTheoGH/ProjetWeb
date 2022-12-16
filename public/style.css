@@ -1,5 +1,6 @@
 body{
   margin:auto;
+  background-color: blanchedalmond;
 }
 
 /* fond d'accueil */
@@ -255,17 +256,28 @@ input[type="radio"]{
   background-color: black;
 }
 
-/* tableau des pions posés */
 table{
-  position:absolute;
-  top:35%;
-  left:2%;
   padding: 1em;
   border: 2px solid black;
+  background-color: whitesmoke;
 }
 
-/* titre tableau */
 thead{
   background-color: grey;
   color: black;
+  font-size:1.25em;
+}
+
+/* tableau des pions posés */
+.tabPion{
+  position:absolute;
+  top:35%;
+  left:2%;
+}
+
+/* tableau des corridors posés */
+.tabCorridor{
+  position:absolute;
+  top:50%;
+  left:2%;
 }

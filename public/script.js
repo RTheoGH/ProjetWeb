@@ -128,16 +128,26 @@ function afficheScores(tab){
     });
 }
 
+/* affiche le nombre de corridors posés pour chaque joueurs */
+function afficheCorridors(tab){
+    tab.forEach((element,index) => {
+        $("#corridor"+index).text(element);
+    });
+}
+
 /* actualise le damier lorqu'un joueur pose un pion */
 socket.on('dernierPion',(data) => {
     if(data.isCorridor){
         poseCorridor(data.direction, "h"+data.case);
+        oldCorridor= $("#corridor"+data.joueur).text();
+        $("#corridor"+data.joueur).text(parseInt(oldCorridor)+1);
+        console.log("on actualise corridors posés");
     }
     else{
-    $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
-    oldScore = $("#score"+data.joueur).text();
-    $("#score"+data.joueur).text(parseInt(oldScore)+1);
-    console.log("on actualise");
+        $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
+        oldScore = $("#score"+data.joueur).text();
+        $("#score"+data.joueur).text(parseInt(oldScore)+1);
+        console.log("on actualise pion posés");
     }
 });
 
@@ -162,7 +172,7 @@ function showJeu(){
     //console.log(joueursPresents);
     setJeton(joueursPresents.indexOf(nomJoueur));
     $("header").text("Partie en cours...");
-    var tabScore="<table><thead>\
+    var tabScore="<table class='tabPion'><thead>\
                         <tr><th colspan='2'>Nombre de pions posés</th></tr>\
                         </thead>\
                     <tbody>";
@@ -171,6 +181,13 @@ function showJeu(){
         tabScore+="<tr><td>"+element+"</td><td id='score"+index+"'>0</td></tr>"
     });
     tabScore+="</tbody></table>";
+    var tabCorridor="<table class='tabCorridor'><thead>\
+                        <tr><th colspan='2'>Corridors posés</th></tr>\
+                        </thead>\
+                    <tbody>";
+    joueursPresents.forEach((element,index) => {
+        tabCorridor+="<tr><td>"+element+"</td><td id='corridor"+index+"'>0</td></tr>"
+    });
     var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"
     var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"
     var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"
@@ -182,13 +199,13 @@ function showJeu(){
     var bouton="<button class='quitterButton red'\
         onClick='quitterLaPartieEnCours()'>Quitter la partie</button>";
     if(joueursPresents.length==2){
-        $("body").append(tabScore,top,gauche,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,top,gauche,div1,chat,bouton);
     }
     if(joueursPresents.length==3){
-        $("body").append(tabScore,top,gauche,droite,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,top,gauche,droite,div1,chat,bouton);
     }
     if(joueursPresents.length==4){
-        $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
+        $("body").append(tabScore,tabCorridor,top,gauche,droite,bas,div1,chat,bouton);
     }
     // $("body").append(tabScore,top,gauche,droite,bas,div1,chat,bouton);
     $.getJSON('/recupTaille',(n) => {
