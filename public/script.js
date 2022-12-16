@@ -148,9 +148,9 @@ socket.on('dernierPion',(data) => {
         console.log("on actualise corridors posés");
         compteurC[data.joueur]+=1;
         console.log("Compteur de corridors :"+compteurC);
-        // if(compteurC[data.joueur]==3){
-        //     $("#pion").prop("checked",true);
-        //     $("#corridorTLBR").prop("disabled",true);
+        // if(compteurC[data.joueur]==3){                // petit test pour desactiver les corridors une fois le nombre atteint
+        //     $("#pion").prop("checked",true);                    // le probleme c'est que ça désactiver les boutons pour tout le monde
+        //     $("#corridorTLBR").prop("disabled",true);             // sans que tous les joueurs aient posé leurs n corridors
         //     $("#corridorTRBL").prop("disabled",true);
         //     $("#corridorMLMR").prop("disabled",true);
         // }

@@ -35,7 +35,7 @@
     > Les joueurs posent des hexagones sur le damier.
 
 - Hexagone corridors
-    > Les joueurs peuvent poser des "corridors", des voies à sens unique.
+    > Les joueurs peuvent poser des "corridors", des voies à sens unique. (Il faut au minimum poser 3 corridors pour gagner)
 
 - Communication des joueurs :
     > Tchat textuel (protégé : pour eviter de créer des boutons et autres).
