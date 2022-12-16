@@ -193,6 +193,7 @@ function showJeu(){
         tabScore+="<tr><td>"+element+"</td><td id='score"+index+"'>0</td></tr>"
     });
     tabScore+="</tbody></table>";
+
     var tabCorridor="<table class='tabCorridor'><thead>\
                         <tr><th colspan='2'>Corridors posés</th></tr>\
                         </thead>\
@@ -200,6 +201,7 @@ function showJeu(){
     joueursPresents.forEach((element,index) => {
         tabCorridor+="<tr><td>"+element+"</td><td id='corridor"+index+"'>0</td></tr>"
     });
+
     var swap="<div class='switchPC'>\
             <input name='swap' id='pion' type='radio' value='Pion' checked />\
             <label for='pion'>Pion</label><br/>\
@@ -209,6 +211,7 @@ function showJeu(){
             <label for='corridorTRBL'>Corridor /</label><br/>\
             <input name='swap' id='corridorMLMR' type='radio'/>\
             <label for='corridorMLMR'>Corridor -</label><br/></div>";
+
     var top="<div id='j1' class='nomJ hautJ red'>"+joueursPresents[0]+"</div>"
     var gauche="<div id='j2' class='nomJ gaucheJ blue'>"+joueursPresents[1]+"</div>"
     var droite="<div id='j3' class='nomJ droiteJ green'>"+joueursPresents[2]+"</div>"

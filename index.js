@@ -27,6 +27,7 @@ function initHex(n){
 var jeton = 0, dernierPion = -1;
 var dernierJeton = -1;
 var partieLancee=false;
+var compteurCorridors=[0,0,0,0];
 
 function tourNext(tour){
     if(tour==rotation[rotation.length-1]){
@@ -369,12 +370,15 @@ io.on("connection", (socket) => {
                             break;
                         case "corridorTLBR":
                             hex[position] = -2;
+                            compteurCorridors[jeton]+=1;
                             break;
                         case "corridorTRBL":
                             hex[position] = -3;
+                            compteurCorridors[jeton]+=1;
                             break;
                         case "corridorMLMR":
                             hex[position] = -4;
+                            compteurCorridors[jeton]+=1;
                             break;
                     }
                     dernierJeton = jeton;
