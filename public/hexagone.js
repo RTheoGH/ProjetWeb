@@ -46,7 +46,7 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
                 .attr("stroke", "black")
                 .attr("fill", "white")
                 .attr("id", "h"+(ligne*nbLignes+colonne)) // car un id doit commencer par une lettre pour pouvoir être utilisé
-                .on("click", function(d) {
+                .on("auxclick", function(d) {
                     let position=d3.select(this).attr('id').substring(1);
                     console.log(position);
                     socket.emit('pion',{'position':position,'numJoueur':jeton});
@@ -55,8 +55,8 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
     }
 }
 
-function poseCorridor(direction,idHex) {
-    hexagone = $("#"+idHex);
+function poseCorridor(direction,position) {
+    hexagone = $("#"+position);
     hexagone.attr("fill","black");
     points = hexagone.attr("d").split(" ");
     point1 = [];
@@ -81,7 +81,7 @@ function poseCorridor(direction,idHex) {
     }
     corridor = "M" + point1[0] + "," + point1[1] + " L" + point2[0] + "," + point2[1] + " Z";
     d3.select("svg").append("path")
-        .attr("id","i"+idHex.split("h")[1])
+        .attr("id","i"+position.split("h")[1])
         .attr("d",corridor)
         .attr("stroke","white")
         .attr("fill","black")
