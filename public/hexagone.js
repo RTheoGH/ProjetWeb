@@ -60,3 +60,36 @@ function genereDamier(rayon, nbLignes, nbColonnes) {
             }
     }
 }
+
+function poseCorridor(direction,idHex) {
+    hexagone = $("#"+idHex);
+    hexagone.attr("fill","black");
+    points = hexagone.attr("d").split(" ");
+    point1 = [];
+    point2 = [];
+    switch (direction) {
+    case "topleft_bottomright":
+            point1 = [(parseFloat(points[0].split(",")[0].split("M")[1]) + parseFloat(points[5].split(",")[0]))/2, (parseFloat(points[0].split(",")[1]) + parseFloat(points[5].split(",")[1]))/2];
+            point2 = [(parseFloat(points[2].split(",")[0]) + parseFloat(points[3].split(",")[0]))/2, (parseFloat(points[2].split(",")[1]) + parseFloat(points[3].split(",")[1]))/2];
+        break;
+        case "topright_bottomleft":
+            point1 = [(parseFloat(points[0].split(",")[0].split("M")[1]) + parseFloat(points[1].split(",")[0].split("L")[1]))/2, (parseFloat(points[0].split(",")[1]) + parseFloat(points[1].split(",")[1]))/2];
+            console.log(point1);
+            point2 = [(parseFloat(points[3].split(",")[0]) + parseFloat(points[4].split(",")[0]))/2, (parseFloat(points[3].split(",")[1]) + parseFloat(points[4].split(",")[1]))/2];
+            console.log(point2);
+        break;
+        case "middleleft_middleright":
+            point1 = [(parseFloat(points[1].split(",")[0].split("L")[1]) + parseFloat(points[2].split(",")[0]))/2, (parseFloat(points[1].split(",")[1]) + parseFloat(points[2].split(",")[1]))/2];
+            console.log(point1);
+            point2 = [(parseFloat(points[4].split(",")[0]) + parseFloat(points[5].split(",")[0]))/2, (parseFloat(points[4].split(",")[1]) + parseFloat(points[5].split(",")[1]))/2];
+            console.log(point2);
+        break;
+    }
+    corridor = "M" + point1[0] + "," + point1[1] + " L" + point2[0] + "," + point2[1] + " Z";
+    d3.select("svg").append("path")
+        .attr("id","i"+idHex.split("h")[1])
+        .attr("d",corridor)
+        .attr("stroke","white")
+        .attr("fill","black")
+        .attr("stroke-width","5");
+}

@@ -130,10 +130,15 @@ function afficheScores(tab){
 
 /* actualise le damier lorqu'un joueur pose un pion */
 socket.on('dernierPion',(data) => {
+    if(data.isCorridor){
+        poseCorridor(data.direction, "h"+data.case);
+    }
+    else{
     $("#h"+data.case).attr("fill",couleursJoueurs[data.joueur]);
     oldScore = $("#score"+data.joueur).text();
     $("#score"+data.joueur).text(parseInt(oldScore)+1);
     console.log("on actualise");
+    }
 });
 
 /* fonction pour envoyer un message */
